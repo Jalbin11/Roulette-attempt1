@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,22 +13,23 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class WheelPanel extends JPanel 
 {
-	// fields used for background scaling math
+	// background scaling fields/objects
     private Image background;
     private Image scaledBackground;
     private double scaleCoefficient;
     private int scaleWidth;
     private int scaleHeight;
-    private int width;
-    private int height;
     private int x;
     private int y;
-    	
+        	
 	public WheelPanel() 
 	{
 		background = loadBackgroundImage();
+		setBackground(Color.white);
+
 	}
-    
+	
+
 	@Override
     public void paintComponent(Graphics g)
     {
@@ -42,18 +44,16 @@ public class WheelPanel extends JPanel
 		scaledBackground = background.getScaledInstance(scaleWidth, scaleHeight, Image.SCALE_SMOOTH);
 		
 		// determine where to draw image from, accounting for border pixels
-		width = getWidth() - 1;
-		height = getHeight() - 1;
-		x = (width - scaledBackground.getWidth(this)) / 2;
-		y = (height - scaledBackground.getHeight(this)) / 2;
+		x = ((getWidth() -1) - scaledBackground.getWidth(this)) / 2;
+		y = ((getHeight() -1) - scaledBackground.getHeight(this)) / 2;
 		
 		// paint the scaled image at the appropriate coordinates
 	    g.drawImage(scaledBackground, x, y, this);
     }
 	
-	// calculates the background scaling coefficient from start and end dimension values
 	public double getScaleCoefficient(Dimension start, Dimension finish) 
-	{
+	{	
+		// calculate the background scaling coefficient from start and end dimension values
 	    double scaleFactor = 1;
         double scaleFactorWidth = getScaleDegree(start.width, finish.width);
 	    double scaleFactorHeight = getScaleDegree(start.height, finish.height);

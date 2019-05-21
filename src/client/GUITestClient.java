@@ -1,7 +1,7 @@
 package client;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import model.GameEngineImpl;
 import model.SimplePlayer;
@@ -16,9 +16,9 @@ public class GUITestClient
 {
 	 
 	public static void main(String args[])
-	{
+	{	
 		final GameEngine gameEngine = new GameEngineImpl();
-	    GameFrame gameFrame = new GameFrame();
+	    final GameFrame gameFrame = new GameFrame();
 
 	    // add callbacks to GameEngine
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
@@ -37,11 +37,7 @@ public class GUITestClient
 	        // NOTE: we are passing a different BetType each time!
 	        gameEngine.placeBet(player, 100, BetType.values()[enumOrdinal++ % BetType
 	                                                          .values().length]);
-	      }
-      	      
-	      gameEngine.spin(1, 100, 5);
-
-	      // TODO reset bets for next round if you were playing again
+	      }   
+	      gameEngine.spin(1, 500, 25);
 	   }
-
 	}
