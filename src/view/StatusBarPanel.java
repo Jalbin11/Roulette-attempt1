@@ -3,9 +3,11 @@ package view;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class StatusBarPanel extends JPanel {
+public class StatusBarPanel extends JPanel 
+{
 
-	public StatusBarPanel() {
+	public StatusBarPanel() 
+	{
 		// TODO Auto-generated constructor stub
 	}
 

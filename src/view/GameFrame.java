@@ -12,8 +12,8 @@ public class GameFrame extends JFrame
 	public GameFrame() 
 	{	
 		// create frame and contents
-		super("Wheelgame - Assignment 2");
-		setPreferredSize(new Dimension(1200, 800));
+		super("WheelgameGUI - Assignment 2");
+		setPreferredSize(new Dimension(1200, 1000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		populateComponents();
 		pack();
