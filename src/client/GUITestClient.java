@@ -18,7 +18,7 @@ public class GUITestClient
 	public static void main(String args[])
 	{	
 		final GameEngine gameEngine = new GameEngineImpl();
-	    final GameFrame gameFrame = new GameFrame();
+	    final GameFrame gameFrame = new GameFrame(gameEngine);
 
 	    // add callbacks to GameEngine
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
@@ -38,6 +38,6 @@ public class GUITestClient
 	        gameEngine.placeBet(player, 100, BetType.values()[enumOrdinal++ % BetType
 	                                                          .values().length]);
 	      }   
-	      gameEngine.spin(1, 500, 25);
+//	      gameEngine.spin(1, 500, 25);
 	   }
 	}

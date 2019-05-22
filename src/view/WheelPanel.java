@@ -10,6 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import model.interfaces.GameEngine;
+
 @SuppressWarnings("serial")
 public class WheelPanel extends JPanel 
 {
@@ -25,8 +27,7 @@ public class WheelPanel extends JPanel
 	public WheelPanel() 
 	{
 		background = loadBackgroundImage();
-		setBackground(Color.white);
-
+		setBackground(new Color(0, 153, 0));
 	}
 	
 

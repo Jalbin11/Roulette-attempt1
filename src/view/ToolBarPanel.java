@@ -1,33 +1,45 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.border.Border;
+
+import controller.ButtonController;
+import model.interfaces.GameEngine;
 
 @SuppressWarnings("serial")
-public class ToolBarPanel extends JPanel {
+public class ToolBarPanel extends JPanel 
+{
+	private JToolBar toolBar = new JToolBar("Game Tasks");
+	private JButton addPlayerButton = new JButton("  Add New Player  ");
+	private JButton removePlayerButton = new JButton("  Remove Player  ");
+	private JButton summaryButton = new JButton("  All Games Stats  ");
+	private JButton multiSpinButton = new JButton("  Spin Multiple Times  ");
+	private JPanel spacePanel = new JPanel();
+	private JButton spinButton = new JButton("   SPIN!   ");
 
-	private JToolBar toolBar = new JToolBar();
-	private JButton button1 = new JButton("Button one");
-	private JButton button2 = new JButton("Button two");
-	private JButton button3 = new JButton("Button three");
-	private JButton button4 = new JButton("Button four");
-	private JButton button5 = new JButton("Button five");
-	private JButton button6 = new JButton("Button six");
-	private JButton spinButton = new JButton("Spin");
-
-	public ToolBarPanel() {
-		setLayout(new BorderLayout());
-		toolBar.add(button1);
-		toolBar.add(button2);
-		toolBar.add(button3);
-		toolBar.add(button4);
-		toolBar.add(button5);
-		toolBar.add(button6);
-		add(toolBar, BorderLayout.CENTER);
-		add(spinButton, BorderLayout.WEST);
+	public ToolBarPanel(GameEngine gameEngine, GameFrame gameFrame) 
+	{
+		setLayout(new FlowLayout());
+		Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);	
+		setBorder(blackBorder);
+		
+		addPlayerButton.addActionListener(new ButtonController(addPlayerButton, gameFrame, gameEngine));
+		
+		toolBar.add(addPlayerButton);
+		toolBar.add(removePlayerButton);
+		toolBar.add(summaryButton);
+		toolBar.add(multiSpinButton);
+		spacePanel.setPreferredSize(new Dimension(35, 25));
+		add(spinButton);
+		add(spacePanel);
+		add(toolBar);
 	}
 
 }

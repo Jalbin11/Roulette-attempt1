@@ -1,7 +1,6 @@
 package view;
 
 import model.interfaces.GameEngine;
-import model.interfaces.Player;
 import model.interfaces.Slot;
 import view.interfaces.GameEngineCallback;
 

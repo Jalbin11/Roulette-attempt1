@@ -9,11 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import model.interfaces.GameEngine;
+
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame
 {
-	
-	public GameFrame() 
+	public GameFrame(GameEngine gameEngine) 
 	{	
 		super("WheelGameGUI - Assignment 2");
 		
@@ -23,7 +24,7 @@ public class GameFrame extends JFrame
 		// create frame and contents
 		setPreferredSize(new Dimension(1200, 1000));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		populateComponents();
+		populateComponents(gameEngine, this);
 		pack();
 		
 		// set default window position to center of screen
@@ -31,18 +32,21 @@ public class GameFrame extends JFrame
 		setVisible(true);
 	}
 	
-	private void populateComponents()
+	private void populateComponents(GameEngine gameEngine, GameFrame gameFrame)
 	{
 		setLayout(new BorderLayout());
 		
+		// maintain reference to model (gameEngine) and view (gameFrame) 
+		// for relevant children view components
+		
 		// drop down menu, player stats and toolbar
-		add(new SummaryPanel(), BorderLayout.NORTH);
+		add(new SummaryPanel(gameEngine, gameFrame), BorderLayout.NORTH);
 	
+		// bottom-of-screen status bar
+		add(new StatusBarPanel(gameEngine, gameFrame), BorderLayout.SOUTH);
+		
 		// main game wheel
 		add(new WheelPanel(), BorderLayout.CENTER);
-		
-		// bottom-of-screen status bar
-		add(new StatusBarPanel(), BorderLayout.SOUTH);
 	}
 	
 	private void setUILookAndFeel(javax.swing.plaf.FontUIResource f)

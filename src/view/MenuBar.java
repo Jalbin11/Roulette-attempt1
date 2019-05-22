@@ -4,6 +4,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import model.interfaces.GameEngine;
+
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 
@@ -14,7 +16,7 @@ public class MenuBar extends JMenuBar {
 	  private JMenuItem copyMenuItem;
 	  private JMenuItem pasteMenuItem;
 	  
-	  public MenuBar()
+	  public MenuBar(GameEngine gameEngine, GameFrame gameFrame)
 	  {
 		  // build the File menu
 		  fileMenu = new JMenu("File");
