@@ -1,4 +1,4 @@
-package view.dialog;
+package view.addplayerdialog;
 
 import java.awt.FlowLayout;
 

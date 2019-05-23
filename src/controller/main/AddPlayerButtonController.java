@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import controller.main.AbstractComponentController;
 import model.interfaces.GameEngine;
-import view.dialog.AddPlayerDialog;
+import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
 
 public class AddPlayerButtonController extends AbstractComponentController 

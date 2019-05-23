@@ -18,9 +18,12 @@ public class StatusBarPanel extends JPanel
 	private JLabel readyStatusLabel = new JLabel(GameStatus.ADDPLAYERS.statusString(), JLabel.CENTER);
 	private JLabel spinCountLabel = new JLabel("Total Spins: 0", JLabel.CENTER);
 
+	private final int rows = 1;
+	private final int cols = 3;
+	
 	public StatusBarPanel(GameEngine gameEngine, GameFrame gameFrame)
 	{
-		setLayout(new GridLayout(1, 3));
+		setLayout(new GridLayout(rows, cols));
 		Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
 		
 		this.playerCountStatusLabel.setBorder(blackBorder);
@@ -31,7 +34,7 @@ public class StatusBarPanel extends JPanel
 		add(this.readyStatusLabel);
 		add(this.spinCountLabel);
 	}
-	
+		
 	public JLabel getPlayerCountStatusLabel() 
 	{
 		return this.playerCountStatusLabel;

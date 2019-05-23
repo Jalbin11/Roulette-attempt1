@@ -8,11 +8,13 @@ import javax.swing.JOptionPane;
 import controller.main.AbstractComponentController;
 import model.SimplePlayer;
 import model.interfaces.GameEngine;
-import view.dialog.AddPlayerDialog;
+import view.addplayerdialog.AddPlayerDialog;
+import view.enumerations.GameStatus;
 import view.main.GameFrame;
 
 public class AddButtonController extends AbstractComponentController 
-{
+{	
+	private final int defaultPoints = 1000;
 
 	public AddButtonController(Component viewComponent, AddPlayerDialog dialog, GameFrame gameFrame, GameEngine gameEngine) 
 	{
@@ -22,21 +24,31 @@ public class AddButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// validate name field
+		// validate name field for a-z characters only
 		String name = getDialog().getInputPanel().getNameField().getText(); 
 		if (name.matches("^[a-zA-Z]+$"))
 		{	
 			// start players with 1000 points by default
-			int points = 1000;
+			int points = defaultPoints;
 			
 			// determine player id based on number of existing players
-			String id = String.valueOf(getGameEngine().getAllPlayers().size() + 1);		
+			int playerCount = getGameEngine().getAllPlayers().size();
+			String id = String.valueOf(playerCount + 1);		
 			
 			// add the player
-			getGameEngine().addPlayer(new SimplePlayer(id, name, points));
+			SimplePlayer newPlayer = new SimplePlayer(id, name, points);
+			getGameEngine().addPlayer(newPlayer);
 			
+			// close dialog
 			JOptionPane.showMessageDialog(getGameFrame(), "Player " + id + " " + name + " added.");
 			getDialog().dispose();
+			
+		
+			// do a bit later
+//			getGameFrame().getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.READY.statusString());
+			
+			// update other view components
+			getGameFrame().getSummaryPanel().getStatsPanel().updatePanels(getGameEngine());
 		}
 		else
 		{

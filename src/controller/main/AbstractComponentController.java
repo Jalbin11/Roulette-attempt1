@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 
 import model.interfaces.GameEngine;
-import view.dialog.AddPlayerDialog;
+import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
 
 public abstract class AbstractComponentController implements ActionListener
@@ -20,6 +20,7 @@ public abstract class AbstractComponentController implements ActionListener
 		this.viewComponent = viewComponent;
 		this.dialog = dialog;
 		this.gameEngine = gameEngine;
+		this.gameFrame = gameFrame;
 	}
 	
 	// constructor for main gameframe controllers only 

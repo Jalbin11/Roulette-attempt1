@@ -3,11 +3,10 @@ package controller.addplayerdialog;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JDialog;
 
 import controller.main.AbstractComponentController;
 import model.interfaces.GameEngine;
-import view.dialog.AddPlayerDialog;
+import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
 
 public class CancelButtonController extends AbstractComponentController 
