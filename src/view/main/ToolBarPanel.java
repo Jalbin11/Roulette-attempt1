@@ -22,7 +22,7 @@ public class ToolBarPanel extends JPanel
 	private JButton summaryButton = new JButton("  All Games Stats  ");
 	private JButton multiSpinButton = new JButton("  Spin Multiple Times  ");
 	private JPanel spacePanel = new JPanel();
-	private JButton spinButton = new JButton("   SPIN!   ");
+	private JButton spinButton = new JButton("   SPIN   ");
 
 	public ToolBarPanel(GameEngine gameEngine, GameFrame gameFrame) 
 	{
