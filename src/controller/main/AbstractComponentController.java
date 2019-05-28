@@ -5,8 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.JDialog;
+
 import model.interfaces.GameEngine;
-import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
 
 public abstract class AbstractComponentController implements ActionListener, PropertyChangeListener, FocusListener
@@ -16,10 +17,10 @@ public abstract class AbstractComponentController implements ActionListener, Pro
 	private Component viewComponent;
 	private GameEngine gameEngine;
 	private GameFrame gameFrame;
-	private AddPlayerDialog dialog;
+	private JDialog dialog;
 
 	// constructor for whole app view controllers (dialogs and main frame)
-	public AbstractComponentController(Component viewComponent, AddPlayerDialog dialog, GameFrame gameFrame, GameEngine gameEngine)
+	public AbstractComponentController(Component viewComponent, JDialog dialog, GameFrame gameFrame, GameEngine gameEngine)
 	{
 		this.viewComponent = viewComponent;
 		this.dialog = dialog;
@@ -36,7 +37,7 @@ public abstract class AbstractComponentController implements ActionListener, Pro
 	}
 	
 	// constructor for dialog controllers only
-	public AbstractComponentController(Component viewComponent, AddPlayerDialog dialog, GameEngine gameEngine)
+	public AbstractComponentController(Component viewComponent, JDialog dialog, GameEngine gameEngine)
 	{
 		this.viewComponent = viewComponent;
 		this.dialog = dialog;
@@ -53,7 +54,7 @@ public abstract class AbstractComponentController implements ActionListener, Pro
 		return this.viewComponent;
 	}
 	
-	public AddPlayerDialog getDialog() 
+	public JDialog getDialog() 
 	{
 		return this.dialog;
 	}

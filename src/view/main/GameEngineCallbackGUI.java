@@ -1,31 +1,58 @@
 package view.main;
 
+import java.awt.Image;
+
+import javax.swing.SwingUtilities;
+
 import model.interfaces.GameEngine;
 import model.interfaces.Slot;
+import view.enumerations.GameStatus;
 import view.interfaces.GameEngineCallback;
 
 public class GameEngineCallbackGUI implements GameEngineCallback {
 
-	public GameEngineCallbackGUI() 
+	private GameFrame gameFrame;
+	
+	public GameEngineCallbackGUI(GameFrame gameFrame) 
 	{
-		
+		this.gameFrame = gameFrame;
 	}
 
 	@Override
 	public void nextSlot(Slot slot, GameEngine engine) 
-	{
-		// call methods to update view components
-		
+	{	
+		// update ball position	
+		SwingUtilities.invokeLater(new Runnable()
+		{
+		@Override
+		public void run()
+		{
+			gameFrame.getWheelPanel().updateBallPosition(slot);
+		}
+		});		
 	}
 
 	@Override
-	public void result(Slot result, GameEngine engine) 
+	public void result(Slot result, GameEngine gameEngine) 
 	{
-		// calculate player betting results
-		// first callback will have already done the calculation. 
-		// simply get (already updated) player data from engine.getAllPlayers()
-	    // then update relevant view components
-	    // first callback will resetbet(), dont do twice
+		// log results to summary object/panel/something
+		// TODO send results and player summary strings wrapped in a results object
+		// increment spincount on statusbar panel
+		
+		// update views
+		gameFrame.getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.GAMEOVER.statusString());
+		gameFrame.getSummaryPanel().getToolBarPanel().unLockButtons();
+				
+		// update and unlock summary panel stats panels
+		for(PlayerSummaryPanel panel : gameFrame.getSummaryPanel().getStatsPanel().getAllPanels())
+		{
+			panel.setHasPlacedBet(false);
+			// TODO
+			// update currentbet and last win/loss
+		}
+		gameFrame.getSummaryPanel().getStatsPanel().updatePanels(gameEngine, gameFrame);
+		
+		// A1 logger callback already calls resetBet() and calculateBet(), don't do it twice
 	}
 
 }

@@ -11,28 +11,27 @@ public class MenuBar extends JMenuBar {
 
 	  private JMenu fileMenu;
 	  private JMenu editMenu;
-	  private JMenuItem openMenuItem;
-	  private JMenuItem cutMenuItem;
-	  private JMenuItem copyMenuItem;
-	  private JMenuItem pasteMenuItem;
+	  private JMenuItem exitMenuItem;
+	  private JMenuItem addPlayerMenuItem;
+	  private JMenuItem removePlayerMenuItem;
+	  private JMenuItem summaryMenuItem;
 	  
 	  public MenuBar(GameEngine gameEngine, GameFrame gameFrame)
 	  {
-		  // build the File menu
-		  this.fileMenu = new JMenu("File");
-		  this.openMenuItem = new JMenuItem("Open");
-		  this.fileMenu.add(this.openMenuItem);
+		  // Menu menu
+		  this.fileMenu = new JMenu("Menu");
+		  this.exitMenuItem = new JMenuItem("Exit");
+		  this.fileMenu.add(this.exitMenuItem);
 
-		  // build the Edit menu
+		  // Edit menu
 		  this.editMenu = new JMenu("Edit");
-		  this.cutMenuItem = new JMenuItem("Cut");
-		  this.copyMenuItem = new JMenuItem("Copy");
-		  this.pasteMenuItem = new JMenuItem("Paste");
-		  this.editMenu.add(this.cutMenuItem);
-		  this.editMenu.add(this.copyMenuItem);
-		  this.editMenu.add(this.pasteMenuItem);
+		  this.addPlayerMenuItem = new JMenuItem("Add new player...");
+		  this.removePlayerMenuItem = new JMenuItem("Remove a player...");
+		  this.summaryMenuItem = new JMenuItem("Show all games summary");
+		  this.editMenu.add(this.addPlayerMenuItem);
+		  this.editMenu.add(this.removePlayerMenuItem);
+		  this.editMenu.add(this.summaryMenuItem);
 
-		  // add menus to menubar
 		  add(this.fileMenu);
 		  add(this.editMenu);		  
 	  }

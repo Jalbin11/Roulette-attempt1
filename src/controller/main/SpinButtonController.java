@@ -5,14 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 
-import controller.main.AbstractComponentController;
-import model.interfaces.GameEngine;
-import view.addplayerdialog.AddPlayerDialog;
-import view.main.GameFrame;
+import javax.swing.JOptionPane;
 
-public class AddPlayerButtonController extends AbstractComponentController 
+import model.enumeration.BetType;
+import model.interfaces.GameEngine;
+import view.enumerations.GameStatus;
+import view.main.GameFrame;
+import view.main.PlayerSummaryPanel;
+
+public class SpinButtonController extends AbstractComponentController
 {
-	public AddPlayerButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
+	public SpinButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
 	{
 		super(viewComponent, gameFrame, gameEngine);
 	}
@@ -20,11 +23,18 @@ public class AddPlayerButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// create add player dialog 
-		@SuppressWarnings("unused")
-		AddPlayerDialog addPlayerDialog = new AddPlayerDialog(getGameEngine(), getGameFrame());
-	}
+		// prompt the user to place all player bets 
+		if (false)
+		{
 
+		}
+		else
+		{
+			// prompt dialog
+			JOptionPane.showMessageDialog(getGameFrame(), "Submit all player bets before spinning!");
+		}
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) 
 	{
@@ -42,5 +52,4 @@ public class AddPlayerButtonController extends AbstractComponentController
 	{
 		
 	}
-
 }

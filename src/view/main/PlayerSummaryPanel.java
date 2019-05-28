@@ -1,5 +1,6 @@
 package view.main;
 
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -8,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.main.BetAmountFieldController;
 import controller.main.SubmitBetButtonController;
 import model.enumeration.BetType;
 import model.interfaces.GameEngine;
@@ -17,13 +17,14 @@ import model.interfaces.Player;
 @SuppressWarnings("serial")
 public class PlayerSummaryPanel extends JPanel
 {	
-	private String id = "";
-	private JPanel lockPanel = new JPanel();;
+	private int id;
+	private JPanel lockPanel = new JPanel();
 	private JPanel mainPanel = new JPanel();
-	private boolean locked = false;
+	private boolean hasPlacedBet = false;
+	private CardLayout cardLayout = new CardLayout();
+
 	private final int rows = 1;
 	private final int cols = 8;
-	
 	private JLabel lockLabel = new JLabel("");
 	private JLabel nameLabel = new JLabel("", JLabel.CENTER);
 	private JLabel pointsLabel = new JLabel("", JLabel.CENTER);
@@ -38,9 +39,10 @@ public class PlayerSummaryPanel extends JPanel
 	{
 		nameLabel.setText(newPlayer.getPlayerName()); 
 		pointsLabel.setText("Points: " + newPlayer.getPoints());
-		id = newPlayer.getPlayerId();
-		
-		// use a CardLayout to swap the panel between functional and locked views when bet is finalised
+		id = Integer.parseInt(newPlayer.getPlayerId());
+	
+		// use cardlayout to hot swap panels
+		setLayout(cardLayout);
 		
 		// lock panel
 		lockPanel.add(lockLabel);
@@ -56,27 +58,35 @@ public class PlayerSummaryPanel extends JPanel
 		mainPanel.add(betTypeComboBox);
 		mainPanel.add(submitBetButton);
 		
+		add(mainPanel, "Main panel");
+		add(lockPanel, "Lock panel");
+			
 		// listeners
 		submitBetButton.addActionListener(new SubmitBetButtonController(this, gameFrame, gameEngine));
-		betAmountField.addFocusListener(new BetAmountFieldController(this, gameFrame, gameEngine));
 	}
 		
+	// swap panels to show "locked" panel
 	public void lock(Player player) 
 	{
-		this = lockPanel;
-		if (!this.locked)
-		{
-			
-			
-		}
+		// update the panel label to show
+		lockLabel.setText(player.getPlayerName() + " places a " + player.getBet() + " point bet on " + player.getBetType()); 
+		cardLayout.show(this, "Lock panel");			
 	}
 	
+	// swap panels to show functional panel
 	public void unlock()
 	{
-		if (this.locked)
-		{
-			
-		}		
+		cardLayout.show(this, "Main panel");	
+	}
+	
+	public void setHasPlacedBet(boolean b) 
+	{
+		this.hasPlacedBet = b;
+	}
+	
+	public boolean getHasPlacedBet() 
+	{
+		return this.hasPlacedBet;
 	}
 	
 	public JTextField getBetAmountField() 
@@ -94,7 +104,7 @@ public class PlayerSummaryPanel extends JPanel
 		return betTypeComboBox;
 	}
 	
-	public String getId() 
+	public int getId() 
 	{
 		return id;
 	}

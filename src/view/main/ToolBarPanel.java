@@ -11,6 +11,8 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 
 import controller.main.AddPlayerButtonController;
+import controller.main.RemovePlayerButtonController;
+import controller.main.SpinButtonController;
 import model.interfaces.GameEngine;
 
 @SuppressWarnings("serial")
@@ -20,7 +22,6 @@ public class ToolBarPanel extends JPanel
 	private JButton addPlayerButton = new JButton("  Add New Player  ");
 	private JButton removePlayerButton = new JButton("  Remove Player  ");
 	private JButton summaryButton = new JButton("  All Games Stats  ");
-	private JButton multiSpinButton = new JButton("  Spin Multiple Times  ");
 	private JPanel spacePanel = new JPanel();
 	private JButton spinButton = new JButton("   SPIN   ");
 
@@ -29,52 +30,56 @@ public class ToolBarPanel extends JPanel
 		setLayout(new FlowLayout());
 		Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);	
 		setBorder(blackBorder);
+				
+		toolBar.add(this.addPlayerButton);
+		toolBar.add(this.removePlayerButton);
+		toolBar.add(this.summaryButton);
+		spacePanel.setPreferredSize(new Dimension(35, 25));
+		removePlayerButton.setEnabled(false);
 		
-		this.addPlayerButton.addActionListener(new AddPlayerButtonController(this.addPlayerButton, gameFrame, gameEngine));
+		add(spinButton);
+		add(spacePanel);
+		add(toolBar);
 		
-		this.toolBar.add(this.addPlayerButton);
-		this.toolBar.add(this.removePlayerButton);
-		this.toolBar.add(this.summaryButton);
-		this.toolBar.add(this.multiSpinButton);
-		this.spacePanel.setPreferredSize(new Dimension(35, 25));
-		add(this.spinButton);
-		add(this.spacePanel);
-		add(this.toolBar);
-	}
-	
-	public JToolBar getToolBar() 
-	{
-		return this.toolBar;
+		addPlayerButton.addActionListener(new AddPlayerButtonController(this.addPlayerButton, gameFrame, gameEngine));
+		removePlayerButton.addActionListener(new RemovePlayerButtonController(this.removePlayerButton, gameFrame, gameEngine));
+		spinButton.addActionListener(new SpinButtonController(this, gameFrame, gameEngine));
 	}
 
 	public JButton getAddPlayerButton() 
 	{
-		return this.addPlayerButton;
+		return addPlayerButton;
 	}
 
 	public JButton getRemovePlayerButton() 
 	{
-		return this.removePlayerButton;
+		return removePlayerButton;
 	}
 
 	public JButton getSummaryButton() 
 	{
-		return this.summaryButton;
-	}
-
-	public JButton getMultiSpinButton() 
-	{
-		return this.multiSpinButton;
-	}
-
-	public JPanel getSpacePanel() 
-	{
-		return this.spacePanel;
+		return summaryButton;
 	}
 
 	public JButton getSpinButton() 
 	{
-		return this.spinButton;
+		return spinButton;
+	}
+	
+	public void lockButtons()
+	{
+		addPlayerButton.setEnabled(false);
+		removePlayerButton.setEnabled(false);
+		summaryButton.setEnabled(false);
+		spinButton.setEnabled(false);
+	}
+
+	public void unLockButtons()
+	{
+		addPlayerButton.setEnabled(true);
+		removePlayerButton.setEnabled(true);
+		summaryButton.setEnabled(true);
+		spinButton.setEnabled(true);
 	}
 
 }

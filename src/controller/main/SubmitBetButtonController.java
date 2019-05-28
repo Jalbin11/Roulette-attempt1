@@ -7,13 +7,24 @@ import java.beans.PropertyChangeEvent;
 
 import javax.swing.JOptionPane;
 
+import model.enumeration.BetType;
 import model.interfaces.GameEngine;
+import view.enumerations.GameStatus;
 import view.main.GameFrame;
 import view.main.PlayerSummaryPanel;
 
 public class SubmitBetButtonController extends AbstractComponentController
 {
-
+	private final int INITIAL_DELAY = 1;
+	private final int FINAL_DELAY = 500;
+	private final int DELAY_INCREMENT = 25;
+	
+	private int currentPoints;
+	private String betString;
+	private BetType betType;
+	private PlayerSummaryPanel panel;
+	private boolean allBetsPlaced = false;
+	
 	public SubmitBetButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
 	{
 		super(viewComponent, gameFrame, gameEngine);
@@ -22,10 +33,12 @@ public class SubmitBetButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		PlayerSummaryPanel panel = (PlayerSummaryPanel) getViewComponent();
-		int currentPoints = Integer.valueOf(panel.getPointsLabel().getText().replaceAll("\\D+",""));
-		String betString = panel.getBetAmountField().getText();
-
+		// assign references for convenience
+		panel = (PlayerSummaryPanel) getViewComponent();
+		currentPoints = Integer.valueOf(panel.getPointsLabel().getText().replaceAll("\\D+",""));
+		betString = panel.getBetAmountField().getText();
+		betType =  (BetType) panel.getBetTypeComboBox().getSelectedItem();
+		
 		// validate entered bet range and type (must be >= 1 and <= points)
 		// check values only if player entered an integer value
 		if (checkStringContainsValidInt(betString))
@@ -36,20 +49,45 @@ public class SubmitBetButtonController extends AbstractComponentController
 			if(betAmount <= Integer.valueOf(currentPoints) && betAmount >= 1)
 			{
 				// set bet and bet type
-				getGameEngine().getPlayer(panel.getId()).setBet(betAmount);
-				getGameEngine().getPlayer(panel.getId()).setBetType();
+				getGameEngine().getPlayer(String.valueOf(panel.getId())).setBet(betAmount);
+				getGameEngine().getPlayer(String.valueOf(panel.getId())).setBetType(betType);
 				
-				// update relevant UI components
-				panel.lock(getGameEngine().getPlayer(panel.getId()));
+				// update other UI components
+				panel.lock(getGameEngine().getPlayer(String.valueOf(panel.getId())));			
+				panel.setHasPlacedBet(true);
 				
-				// call spin() if all players have placed a bet
+				// check if all players have bet
+				allBetsPlaced = true;
+				for (PlayerSummaryPanel p : getGameFrame().getSummaryPanel().getStatsPanel().getAllPanels())
+				{
+					if(!p.getHasPlacedBet())
+					{
+						allBetsPlaced = false;
+					}
+				}
 				
+				// call spin() and update view components if all players have placed a bet
+				if(allBetsPlaced)
+				{
+					getGameFrame().getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.INPROGRESS.statusString());
+					getGameFrame().getSummaryPanel().getToolBarPanel().lockButtons();		
+					
+					// call spin() on a separate thread
+					new Thread()
+					{
+					@Override
+					public void run()
+					{
+						getGameEngine().spin(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
+					}
+					}.start();
+				}
 			}
 			else
 			{
 				// range error dialog
 				JOptionPane.showMessageDialog(getGameFrame(), "Enter a bet between 1 and " + currentPoints);
-				panel.getBetAmountField().setText("1");;				
+				panel.getBetAmountField().setText("1");				
 			}
 		}
 		else

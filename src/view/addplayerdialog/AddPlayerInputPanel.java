@@ -8,13 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import controller.addplayerdialog.CancelButtonController;
 import controller.addplayerdialog.AddButtonController;
+import controller.main.CancelButtonController;
 import model.interfaces.GameEngine;
 import view.main.GameFrame;
 
 @SuppressWarnings("serial")
-public class InputPanel extends JPanel 
+public class AddPlayerInputPanel extends JPanel 
 {
 
 	private JLabel nameLabel = new JLabel("Enter player name: ");
@@ -24,7 +24,7 @@ public class InputPanel extends JPanel
 	private JButton addButton = new JButton("Add");
 	private JButton cancelButton = new JButton("Cancel");
 	
-	public InputPanel(GameEngine gameEngine, AddPlayerDialog dialog, GameFrame gameFrame)
+	public AddPlayerInputPanel(GameEngine gameEngine, AddPlayerDialog dialog, GameFrame gameFrame)
 	{
 		setLayout(new FlowLayout());
 		this.nameField.setColumns(15);

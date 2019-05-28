@@ -1,4 +1,4 @@
-package view.addplayerdialog;
+package view.removeplayerdialog;
 
 import java.awt.FlowLayout;
 
@@ -7,13 +7,13 @@ import model.interfaces.GameEngine;
 import view.main.GameFrame;
 
 @SuppressWarnings("serial")
-public class AddPlayerDialog extends JDialog
+public class RemovePlayerDialog extends JDialog
 {
-	private AddPlayerInputPanel inputPanel;
+	private RemovePlayerInputPanel inputPanel;
 	
-	public AddPlayerDialog(GameEngine gameEngine, GameFrame gameFrame) 
+	public RemovePlayerDialog(GameEngine gameEngine, GameFrame gameFrame) 
 	{
-		super(gameFrame, "Add new player");
+		super(gameFrame, "Remove a player");
 		
 		// create dialog and contents
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -26,14 +26,14 @@ public class AddPlayerDialog extends JDialog
 		setVisible(true);
 	}
 	
-	private void populateComponents(GameEngine gameEngine, AddPlayerDialog dialog, GameFrame gameFrame)
+	private void populateComponents(GameEngine gameEngine, RemovePlayerDialog dialog, GameFrame gameFrame)
 	{
 		setLayout(new FlowLayout());
-		this.inputPanel = new AddPlayerInputPanel(gameEngine, dialog, gameFrame);
+		this.inputPanel = new RemovePlayerInputPanel(gameEngine, dialog, gameFrame);
 		add(this.inputPanel);
 	}
 
-	public AddPlayerInputPanel getInputPanel() 
+	public RemovePlayerInputPanel getInputPanel() 
 	{
 		return this.inputPanel;
 	}

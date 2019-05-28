@@ -5,36 +5,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import controller.main.AbstractComponentController;
 import model.SimplePlayer;
 import model.interfaces.GameEngine;
 import view.addplayerdialog.AddPlayerDialog;
+import view.enumerations.GameStatus;
 import view.main.GameFrame;
 
 public class AddButtonController extends AbstractComponentController 
 {	
-	public AddButtonController(Component viewComponent, AddPlayerDialog dialog, GameFrame gameFrame, GameEngine gameEngine) 
+	private final int minimumPoints = 100;
+	private final String defaultPoints = "750";
+	private final int playerMax = 4; 
+	
+	public AddButtonController(Component viewComponent, JDialog dialog, GameFrame gameFrame, GameEngine gameEngine) 
 	{
 		super(viewComponent, dialog, gameFrame, gameEngine);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
-	{
-		@SuppressWarnings("unused")
-		final int minimumPoints = 100;
-		final String defaultPoints = "750";
+	{	
+		// cast dialog to local variable for convenience reference
+		AddPlayerDialog dialog = (AddPlayerDialog) getDialog();
 		
-		String points = getDialog().getInputPanel().getPointsField().getText();
-		String name = getDialog().getInputPanel().getNameField().getText(); 
+		String points = dialog.getInputPanel().getPointsField().getText();
+		String name = dialog.getInputPanel().getNameField().getText(); 
 
 		// validate points and name fields
 		if (name.matches("^[a-zA-Z]+$") && points.matches("[0-9]+$"))
 		{	
 			// check entered points meets minimum
-			if (Integer.parseInt(points) >= 100 )
+			if (Integer.parseInt(points) >= minimumPoints)
 			{
 				// determine player id based on number of existing players
 				int playerCount = getGameEngine().getAllPlayers().size();
@@ -44,28 +49,36 @@ public class AddButtonController extends AbstractComponentController
 				SimplePlayer newPlayer = new SimplePlayer(id, name, Integer.parseInt(points));
 				getGameEngine().addPlayer(newPlayer);
 				
-				// debug
-				System.out.println("Total players: " + getGameEngine().getAllPlayers().size());
-				
 				// close dialog
 				getDialog().dispose();
 
 				// update other view components
 				getGameFrame().getSummaryPanel().getStatsPanel().updatePanels(getGameEngine(), getGameFrame());
+				getGameFrame().getStatusBarPanel().getPlayerCountStatusLabel().setText("Players: " + playerCount);
+				getGameFrame().getSummaryPanel().getToolBarPanel().getRemovePlayerButton().setEnabled(true);			
+				getGameFrame().getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.READY.statusString());
+
+				// set a maximum player limit, disable add button when player limit met
+				if(playerCount == playerMax)
+				{
+					getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setEnabled(false);
+					getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setText("Max players reached");
+				}
+				
 			}
 			else
 			{
 				// range error dialog
 				JOptionPane.showMessageDialog(getGameFrame(), "Enter points value above 100.");
-				getDialog().getInputPanel().getPointsField().setText(defaultPoints);
+				dialog.getInputPanel().getPointsField().setText(defaultPoints);
 			}
 		}
 		else
 		{
 			// type error dialog
 			JOptionPane.showMessageDialog(getGameFrame(), "Enter valid name (a-z chars only) and points value (integer only).");
-			getDialog().getInputPanel().getNameField().setText("");
-			getDialog().getInputPanel().getPointsField().setText(defaultPoints);
+			dialog.getInputPanel().getNameField().setText("");
+			dialog.getInputPanel().getPointsField().setText(defaultPoints);
 		}
 	}
 

@@ -1,10 +1,7 @@
 package client;
 
 import model.GameEngineImpl;
-import model.SimplePlayer;
-import model.enumeration.BetType;
 import model.interfaces.GameEngine;
-import model.interfaces.Player;
 import view.GameEngineCallbackImpl;
 import view.main.GameEngineCallbackGUI;
 import view.main.GameFrame;
@@ -19,7 +16,7 @@ public class GUITestClient
 	    final GameFrame gameFrame = new GameFrame(gameEngine);
 
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
-	    gameEngine.addGameEngineCallback(new GameEngineCallbackGUI());	    
+	    gameEngine.addGameEngineCallback(new GameEngineCallbackGUI(gameFrame));	    
 	    
 	   }
 	}

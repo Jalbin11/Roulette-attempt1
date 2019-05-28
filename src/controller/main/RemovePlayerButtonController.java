@@ -7,12 +7,12 @@ import java.beans.PropertyChangeEvent;
 
 import controller.main.AbstractComponentController;
 import model.interfaces.GameEngine;
-import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
+import view.removeplayerdialog.RemovePlayerDialog;
 
-public class AddPlayerButtonController extends AbstractComponentController 
+public class RemovePlayerButtonController extends AbstractComponentController 
 {
-	public AddPlayerButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
+	public RemovePlayerButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
 	{
 		super(viewComponent, gameFrame, gameEngine);
 	}
@@ -20,9 +20,12 @@ public class AddPlayerButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// create add player dialog 
-		@SuppressWarnings("unused")
-		AddPlayerDialog addPlayerDialog = new AddPlayerDialog(getGameEngine(), getGameFrame());
+		// create add player dialog if more than one player exists
+		if(getGameEngine().getAllPlayers().size() > 0)
+		{
+			@SuppressWarnings("unused")
+			RemovePlayerDialog removePlayerDialog = new RemovePlayerDialog(getGameEngine(), getGameFrame());	
+		}
 	}
 
 	@Override
