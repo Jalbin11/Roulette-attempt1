@@ -9,7 +9,6 @@ import javax.swing.JDialog;
 
 import controller.main.AbstractComponentController;
 import model.interfaces.GameEngine;
-import view.addplayerdialog.AddPlayerDialog;
 import view.main.GameFrame;
 import view.removeplayerdialog.RemovePlayerInputPanel;
 
@@ -32,11 +31,10 @@ public class RemoveButtonController extends AbstractComponentController {
 		
 		// update view
 		getGameFrame().getSummaryPanel().getStatsPanel().updatePanels(getGameEngine(), getGameFrame());
-		getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setText("Add New Player");
-		getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setEnabled(true);
-		getGameFrame().getStatusBarPanel().getPlayerCountStatusLabel().setText("Players: " + getGameEngine().getAllPlayers().size());
+		getGameFrame().getSummaryPanel().getToolBarPanel().playerMaxReached(false, getGameFrame());
+		getGameFrame().getStatusBarPanel().setPlayerCount(getGameEngine());
 	}
-
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) 
 	{

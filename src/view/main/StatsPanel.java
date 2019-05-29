@@ -17,7 +17,7 @@ import model.interfaces.Player;
 public class StatsPanel extends JPanel 
 {
 	private List<PlayerSummaryPanel> panels = new ArrayList<PlayerSummaryPanel>();
-	private Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);	;
+	private Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
 	private boolean panelExists = false;
 	
 	// use Collections for convenient access to retainAll() method when difference-checking
@@ -93,7 +93,6 @@ public class StatsPanel extends JPanel
 		{
 			for(Integer id : difference)
 			{
-				System.out.println("Redundant panel: " + id);
 				Iterator<PlayerSummaryPanel> iterator = panels.iterator();
 				while(iterator.hasNext())
 				{
@@ -117,6 +116,7 @@ public class StatsPanel extends JPanel
 		revalidate();
 	}
 	
+	// return only a reference
 	public List<PlayerSummaryPanel> getAllPanels() 
 	{	
 		List<PlayerSummaryPanel> allPanels = new ArrayList<PlayerSummaryPanel>(panels);

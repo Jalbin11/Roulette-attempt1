@@ -1,12 +1,9 @@
 package view.main;
 
-import java.awt.Image;
-
 import javax.swing.SwingUtilities;
 
 import model.interfaces.GameEngine;
 import model.interfaces.Slot;
-import view.enumerations.GameStatus;
 import view.interfaces.GameEngineCallback;
 
 public class GameEngineCallbackGUI implements GameEngineCallback {
@@ -34,25 +31,20 @@ public class GameEngineCallbackGUI implements GameEngineCallback {
 
 	@Override
 	public void result(Slot result, GameEngine gameEngine) 
-	{
-		// log results to summary object/panel/something
-		// TODO send results and player summary strings wrapped in a results object
-		// increment spincount on statusbar panel
-		
+	{	
 		// update views
-		gameFrame.getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.GAMEOVER.statusString());
-		gameFrame.getSummaryPanel().getToolBarPanel().unLockButtons();
+		gameFrame.postSpinUIUpdate();
 				
 		// update and unlock summary panel stats panels
 		for(PlayerSummaryPanel panel : gameFrame.getSummaryPanel().getStatsPanel().getAllPanels())
 		{
 			panel.setHasPlacedBet(false);
-			// TODO
-			// update currentbet and last win/loss
+			panel.update(gameEngine.getPlayer(String.valueOf(panel.getId())));
 		}
 		gameFrame.getSummaryPanel().getStatsPanel().updatePanels(gameEngine, gameFrame);
 		
-		// A1 logger callback already calls resetBet() and calculateBet(), don't do it twice
+		// NOTE: A1 logger callback already calls calculateBet() and resetBet()
+		// add calculateBet() and resetBet() here if removing A1 callback
 	}
 
 }

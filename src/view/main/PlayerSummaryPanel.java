@@ -31,7 +31,7 @@ public class PlayerSummaryPanel extends JPanel
 	private JLabel currentBetLabel = new JLabel("Current bet: none", JLabel.CENTER);
 	private JLabel lastOutcomeLabel = new JLabel("Last win/loss: none", JLabel.CENTER);
 	private JLabel betAmountLabel = new JLabel("Bet amount and type: ", JLabel.RIGHT);
-	private JTextField betAmountField = new JTextField("1");
+	private JTextField betAmountField = new JTextField("0");
 	private JButton submitBetButton = new JButton("PLACE BET");
 	private JComboBox<BetType> betTypeComboBox = new JComboBox<BetType>(BetType.values());
 	
@@ -64,13 +64,49 @@ public class PlayerSummaryPanel extends JPanel
 		// listeners
 		submitBetButton.addActionListener(new SubmitBetButtonController(this, gameFrame, gameEngine));
 	}
+	
+	public void update(Player player)
+	{
+		// panel will still have old points and bet values, compare
+		// with new player values to get outcomes
+		
+		int prevPoints = 0;
+		int newPoints = player.getPoints();
+		prevPoints = Integer.parseInt(pointsLabel.getText().replaceAll("[\\D]", ""));
+		pointsLabel.setText("Points: " + newPoints);
+		
+		if (newPoints > prevPoints)
+		{
+			lastOutcomeLabel.setText("Last spin: WIN +" + (newPoints - prevPoints));		
+		}
+		
+		if (newPoints < prevPoints)
+		{
+			lastOutcomeLabel.setText("Last spin: LOSS " + (newPoints - prevPoints));		
+		}
+		
+		if (newPoints == prevPoints)
+		{
+			lastOutcomeLabel.setText("Last spin: No bet");
+		}	
+	}
 		
 	// swap panels to show "locked" panel
 	public void lock(Player player) 
 	{
-		// update the panel label to show
-		lockLabel.setText(player.getPlayerName() + " places a " + player.getBet() + " point bet on " + player.getBetType()); 
-		cardLayout.show(this, "Lock panel");			
+		// update the panel label to reflect bet status
+		if(hasPlacedBet)
+		{
+			lockLabel.setText(player.getPlayerName() + " places a " + player.getBet() + " point bet on " + player.getBetType()); 
+			cardLayout.show(this, "Lock panel");		
+		}		
+		
+		// if no bet placed show NO BET
+		if(!hasPlacedBet)
+		{
+			lockLabel.setText(player.getPlayerName() + " places no bet"); 
+			cardLayout.show(this, "Lock panel");	
+		}
 	}
 	
 	// swap panels to show functional panel
@@ -79,9 +115,15 @@ public class PlayerSummaryPanel extends JPanel
 		cardLayout.show(this, "Main panel");	
 	}
 	
+	// boolean flag, panel should be locked once player places bet if true
 	public void setHasPlacedBet(boolean b) 
 	{
 		this.hasPlacedBet = b;
+	}
+
+	public void setBet(int bet) 
+	{
+		this.currentBetLabel.setText("Current bet: " + bet);
 	}
 	
 	public boolean getHasPlacedBet() 
@@ -108,5 +150,6 @@ public class PlayerSummaryPanel extends JPanel
 	{
 		return id;
 	}
+
 
 }

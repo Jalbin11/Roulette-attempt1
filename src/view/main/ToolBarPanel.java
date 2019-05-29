@@ -21,7 +21,6 @@ public class ToolBarPanel extends JPanel
 	private JToolBar toolBar = new JToolBar("Game Tasks");
 	private JButton addPlayerButton = new JButton("  Add New Player  ");
 	private JButton removePlayerButton = new JButton("  Remove Player  ");
-	private JButton summaryButton = new JButton("  All Games Stats  ");
 	private JPanel spacePanel = new JPanel();
 	private JButton spinButton = new JButton("   SPIN   ");
 
@@ -33,7 +32,6 @@ public class ToolBarPanel extends JPanel
 				
 		toolBar.add(this.addPlayerButton);
 		toolBar.add(this.removePlayerButton);
-		toolBar.add(this.summaryButton);
 		spacePanel.setPreferredSize(new Dimension(35, 25));
 		removePlayerButton.setEnabled(false);
 		
@@ -56,11 +54,6 @@ public class ToolBarPanel extends JPanel
 		return removePlayerButton;
 	}
 
-	public JButton getSummaryButton() 
-	{
-		return summaryButton;
-	}
-
 	public JButton getSpinButton() 
 	{
 		return spinButton;
@@ -70,16 +63,45 @@ public class ToolBarPanel extends JPanel
 	{
 		addPlayerButton.setEnabled(false);
 		removePlayerButton.setEnabled(false);
-		summaryButton.setEnabled(false);
 		spinButton.setEnabled(false);
 	}
 
-	public void unLockButtons()
+	public void unlockButtons()
 	{
 		addPlayerButton.setEnabled(true);
 		removePlayerButton.setEnabled(true);
-		summaryButton.setEnabled(true);
 		spinButton.setEnabled(true);
+	}
+
+	public void playerMaxReached(boolean b, GameFrame gameFrame) 
+	{
+		if(!b)
+		{
+			this.addPlayerButton.setText("Add New Player");
+			this.addPlayerButton.setEnabled(true);			
+			gameFrame.getSummaryPanel().getMenuBar().setAddPlayerLocked(false);
+			
+		}
+		if(b)
+		{
+			this.addPlayerButton.setText("Max Players Reached");
+			this.addPlayerButton.setEnabled(false);	
+			gameFrame.getSummaryPanel().getMenuBar().setAddPlayerLocked(true);
+		}
+	}
+	
+	public void playerMinExceeded(boolean b, GameFrame gameFrame) 
+	{
+		if(b)
+		{
+			this.removePlayerButton.setEnabled(true);		
+			gameFrame.getSummaryPanel().getMenuBar().setRemovePlayerLocked(false);
+		}
+		if(!b)
+		{
+			this.removePlayerButton.setEnabled(false);	
+			gameFrame.getSummaryPanel().getMenuBar().setRemovePlayerLocked(true);
+		}
 	}
 
 }

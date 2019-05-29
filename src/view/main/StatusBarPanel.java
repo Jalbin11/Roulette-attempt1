@@ -14,14 +14,15 @@ import view.enumerations.GameStatus;
 @SuppressWarnings("serial")
 public class StatusBarPanel extends JPanel 
 {
-	private JLabel playerCountStatusLabel = new JLabel("Players: 0", JLabel.CENTER);
-	private JLabel readyStatusLabel = new JLabel(GameStatus.ADDPLAYERS.statusString(), JLabel.CENTER);
-	private JLabel spinCountLabel = new JLabel("Total Spins: 0", JLabel.CENTER);
-
 	private final int rows = 1;
 	private final int cols = 3;
+	private int spinCount= 0;
 	
-	public StatusBarPanel(GameEngine gameEngine, GameFrame gameFrame)
+	private JLabel playerCountStatusLabel = new JLabel("Players: 0", JLabel.CENTER);
+	private JLabel readyStatusLabel = new JLabel(GameStatus.ADDPLAYERS.statusString(), JLabel.CENTER);
+	private JLabel spinCountLabel = new JLabel("Total Spins: " + spinCount, JLabel.CENTER);
+	
+	public StatusBarPanel()
 	{
 		setLayout(new GridLayout(rows, cols));
 		Border blackBorder = BorderFactory.createLineBorder(Color.BLACK);
@@ -35,18 +36,19 @@ public class StatusBarPanel extends JPanel
 		add(this.spinCountLabel);
 	}
 		
-	public JLabel getPlayerCountStatusLabel() 
+	public void setPlayerCount(GameEngine gameEngine) 
 	{
-		return this.playerCountStatusLabel;
+		this.playerCountStatusLabel.setText("Players: " + gameEngine.getAllPlayers().size());
 	}
 
-	public JLabel getReadyStatusLabel() 
+	public void setStatus(GameStatus status) 
 	{
-		return this.readyStatusLabel;
+		this.readyStatusLabel.setText(status.statusString());
 	}
 
-	public JLabel getSpinCountLabel() 
+	public void incrementSpinCount() 
 	{
-		return this.spinCountLabel;
+		this.spinCount++;
+		this.spinCountLabel.setText("Total Spins: " + spinCount);
 	}
 }

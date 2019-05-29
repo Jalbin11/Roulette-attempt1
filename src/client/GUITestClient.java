@@ -8,13 +8,11 @@ import view.main.GameFrame;
 
 public class GUITestClient 
 {
-	 
-	@SuppressWarnings("unused")
 	public static void main(String args[])
 	{	
 		final GameEngine gameEngine = new GameEngineImpl();
 	    final GameFrame gameFrame = new GameFrame(gameEngine);
-
+	   
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackGUI(gameFrame));	    
 	    

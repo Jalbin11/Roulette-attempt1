@@ -9,16 +9,11 @@ import javax.swing.JOptionPane;
 
 import model.enumeration.BetType;
 import model.interfaces.GameEngine;
-import view.enumerations.GameStatus;
 import view.main.GameFrame;
 import view.main.PlayerSummaryPanel;
 
 public class SubmitBetButtonController extends AbstractComponentController
 {
-	private final int INITIAL_DELAY = 1;
-	private final int FINAL_DELAY = 500;
-	private final int DELAY_INCREMENT = 25;
-	
 	private int currentPoints;
 	private String betString;
 	private BetType betType;
@@ -33,9 +28,9 @@ public class SubmitBetButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// assign references for convenience
+		// references for convenience
 		panel = (PlayerSummaryPanel) getViewComponent();
-		currentPoints = Integer.valueOf(panel.getPointsLabel().getText().replaceAll("\\D+",""));
+		currentPoints = getGameEngine().getPlayer(String.valueOf(panel.getId())).getPoints();
 		betString = panel.getBetAmountField().getText();
 		betType =  (BetType) panel.getBetTypeComboBox().getSelectedItem();
 		
@@ -46,15 +41,16 @@ public class SubmitBetButtonController extends AbstractComponentController
 			int betAmount = Integer.valueOf(betString);
 	
 			// check entered value is in range
-			if(betAmount <= Integer.valueOf(currentPoints) && betAmount >= 1)
+			if(betAmount <= currentPoints && betAmount >= 0)
 			{
 				// set bet and bet type
 				getGameEngine().getPlayer(String.valueOf(panel.getId())).setBet(betAmount);
 				getGameEngine().getPlayer(String.valueOf(panel.getId())).setBetType(betType);
-				
-				// update other UI components
-				panel.lock(getGameEngine().getPlayer(String.valueOf(panel.getId())));			
+
+				// update other UI components	
 				panel.setHasPlacedBet(true);
+				panel.setBet(betAmount);
+				panel.lock(getGameEngine().getPlayer(String.valueOf(panel.getId())));	
 				
 				// check if all players have bet
 				allBetsPlaced = true;
@@ -69,8 +65,7 @@ public class SubmitBetButtonController extends AbstractComponentController
 				// call spin() and update view components if all players have placed a bet
 				if(allBetsPlaced)
 				{
-					getGameFrame().getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.INPROGRESS.statusString());
-					getGameFrame().getSummaryPanel().getToolBarPanel().lockButtons();		
+					getGameFrame().preSpinUIUpdate();
 					
 					// call spin() on a separate thread
 					new Thread()
@@ -78,23 +73,23 @@ public class SubmitBetButtonController extends AbstractComponentController
 					@Override
 					public void run()
 					{
-						getGameEngine().spin(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
+						getGameEngine().spin(getGameFrame().getInitialDelay(), getGameFrame().getFinalDelay(), getGameFrame().getDelayIncrement());
 					}
 					}.start();
 				}
 			}
 			else
 			{
-				// range error dialog
-				JOptionPane.showMessageDialog(getGameFrame(), "Enter a bet between 1 and " + currentPoints);
-				panel.getBetAmountField().setText("1");				
+				// bet range error dialog
+				JOptionPane.showMessageDialog(getGameFrame(), "Enter a bet between 0 and " + currentPoints);
+				panel.getBetAmountField().setText("0");				
 			}
 		}
 		else
 		{
 			// type error dialog
 			JOptionPane.showMessageDialog(getGameFrame(), "Enter a valid bet (integer only)");
-			panel.getBetAmountField().setText("1");;
+			panel.getBetAmountField().setText("0");;
 		}
 	}
 

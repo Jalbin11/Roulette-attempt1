@@ -36,7 +36,7 @@ public class AddButtonController extends AbstractComponentController
 		String name = dialog.getInputPanel().getNameField().getText(); 
 
 		// validate points and name fields
-		if (name.matches("^[a-zA-Z]+$") && points.matches("[0-9]+$"))
+		if (name.matches("^[a-zA-Z\\s+]+$") && points.matches("[0-9]+$"))
 		{	
 			// check entered points meets minimum
 			if (Integer.parseInt(points) >= minimumPoints)
@@ -54,17 +54,15 @@ public class AddButtonController extends AbstractComponentController
 
 				// update other view components
 				getGameFrame().getSummaryPanel().getStatsPanel().updatePanels(getGameEngine(), getGameFrame());
-				getGameFrame().getStatusBarPanel().getPlayerCountStatusLabel().setText("Players: " + playerCount);
-				getGameFrame().getSummaryPanel().getToolBarPanel().getRemovePlayerButton().setEnabled(true);			
-				getGameFrame().getStatusBarPanel().getReadyStatusLabel().setText(GameStatus.READY.statusString());
+				getGameFrame().getStatusBarPanel().setPlayerCount(getGameEngine());
+				getGameFrame().getSummaryPanel().getToolBarPanel().playerMinExceeded(true, getGameFrame());	
+				getGameFrame().getStatusBarPanel().setStatus(GameStatus.READY);
 
 				// set a maximum player limit, disable add button when player limit met
 				if(playerCount == playerMax)
 				{
-					getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setEnabled(false);
-					getGameFrame().getSummaryPanel().getToolBarPanel().getAddPlayerButton().setText("Max players reached");
+					getGameFrame().getSummaryPanel().getToolBarPanel().playerMaxReached(true, getGameFrame());
 				}
-				
 			}
 			else
 			{
