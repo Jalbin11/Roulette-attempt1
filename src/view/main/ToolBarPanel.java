@@ -72,7 +72,8 @@ public class ToolBarPanel extends JPanel
 		removePlayerButton.setEnabled(true);
 		spinButton.setEnabled(true);
 	}
-
+	
+	// helper function to enable and disable buttons as player count changes
 	public void playerMaxReached(boolean b, GameFrame gameFrame) 
 	{
 		if(!b)
@@ -82,6 +83,7 @@ public class ToolBarPanel extends JPanel
 			gameFrame.getSummaryPanel().getMenuBar().setAddPlayerLocked(false);
 			
 		}
+		
 		if(b)
 		{
 			this.addPlayerButton.setText("Max Players Reached");
@@ -90,6 +92,7 @@ public class ToolBarPanel extends JPanel
 		}
 	}
 	
+	// helper function to enable and disable buttons as player count changes
 	public void playerMinExceeded(boolean b, GameFrame gameFrame) 
 	{
 		if(b)
@@ -97,6 +100,7 @@ public class ToolBarPanel extends JPanel
 			this.removePlayerButton.setEnabled(true);		
 			gameFrame.getSummaryPanel().getMenuBar().setRemovePlayerLocked(false);
 		}
+		
 		if(!b)
 		{
 			this.removePlayerButton.setEnabled(false);	

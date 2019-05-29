@@ -12,14 +12,14 @@ import view.main.GameFrame;
 
 public abstract class AbstractComponentController implements ActionListener, PropertyChangeListener, FocusListener
 {
-	// implement relevant event handlers as one convenient controller superclass.
+	// implement relevant event handlers as one convenient controller superclass
 	
 	private Component viewComponent;
 	private GameEngine gameEngine;
 	private GameFrame gameFrame;
 	private JDialog dialog;
 
-	// constructor for whole app view controllers (dialogs and main frame)
+	// constructor for gameFrame and dialog controllers
 	public AbstractComponentController(Component viewComponent, JDialog dialog, GameFrame gameFrame, GameEngine gameEngine)
 	{
 		this.viewComponent = viewComponent;
@@ -28,7 +28,7 @@ public abstract class AbstractComponentController implements ActionListener, Pro
 		this.gameFrame = gameFrame;
 	}
 	
-	// constructor for main gameframe controllers only 
+	// constructor for gameFrame component controllers only 
 	public AbstractComponentController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine)
 	{
 		this.viewComponent = viewComponent;
@@ -36,7 +36,7 @@ public abstract class AbstractComponentController implements ActionListener, Pro
 		this.gameEngine = gameEngine;
 	}
 	
-	// constructor for dialog controllers only
+	// constructor for dialog component controllers only
 	public AbstractComponentController(Component viewComponent, JDialog dialog, GameEngine gameEngine)
 	{
 		this.viewComponent = viewComponent;

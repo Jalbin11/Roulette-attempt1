@@ -28,9 +28,9 @@ public class RemovePlayerInputPanel extends JPanel
 			playerSelectComboBox.addItem(new ComboObject(player.getPlayerName(), player));
 		}
 		
-		add(this.playerSelectComboBox);
-		add(this.removeButton);
-		add(this.cancelButton);
+		add(playerSelectComboBox);
+		add(removeButton);
+		add(cancelButton);
 		
 		removeButton.addActionListener(new RemoveButtonController(this, dialog, gameFrame, gameEngine));
 		cancelButton.addActionListener(new CancelButtonController(this.cancelButton, dialog, gameFrame, gameEngine));

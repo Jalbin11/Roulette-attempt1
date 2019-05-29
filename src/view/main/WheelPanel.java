@@ -18,7 +18,6 @@ public class WheelPanel extends JPanel
     private Image background;
     private Image scaledBackground;
     private Slot currentSlot;
-    private final int BALL_DIAMETER = 22;
     private Color bgColour = new Color(0, 153, 0);
     private Color ballColour = new Color(255, 204, 0);
     
@@ -34,6 +33,7 @@ public class WheelPanel extends JPanel
     private final double RADIUS_ADJUST = 0.92; 
     private final double DEGREES = 360.d; 
     private final double DEGREE_ADJUST = 80.52631; 
+    private final int BALL_DIAMETER = 20;
     private double ballX;
     private double ballY;
     private double angle;
@@ -104,7 +104,7 @@ public class WheelPanel extends JPanel
 	
 	public double getScaleCoefficient(Dimension start, Dimension finish) 
 	{	
-		// calculate the background scaling coefficient from start and end dimension values
+		// calculate the background scaling coefficient from start and finish dimension values
 	    factor = 1;
         factorWidth = getScaleDegree(start.width, finish.width);
 	    factorHeight = getScaleDegree(start.height, finish.height);

@@ -36,12 +36,22 @@ public class StatsPanel extends JPanel
 	
 	public void updatePanels(GameEngine gameEngine, GameFrame gameFrame)
 	{
-		// set layout config as panels update
-		setBorder(blackBorder);
-		playerCount = gameEngine.getAllPlayers().size(); 
+		// set layout config as panels are added or removed		
+		playerCount = gameEngine.getAllPlayers().size();
 		setLayout(new GridLayout(playerCount, cols));
 		
-		// clear Lists 
+		// remove border if no players (looks better)
+		if(playerCount > 0)
+		{
+			setBorder(blackBorder);
+
+		}
+		else
+		{
+			setBorder(null);
+		}
+		
+		// clear Lists for new calculation
 		panelIds.clear();
 		playerIds.clear();
 		difference.clear();		
@@ -83,10 +93,12 @@ public class StatsPanel extends JPanel
 		intersection.retainAll(playerIds);
 		
 		for(Integer id : panelIds) 
+		{
 		    if(!intersection.contains(id))
 		    {
 		    	difference.add(id);
 		    }
+		}
 		
 		// if a panel exists with no shared player id, remove the panel
 		if(!difference.isEmpty())

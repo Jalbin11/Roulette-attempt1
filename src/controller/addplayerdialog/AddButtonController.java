@@ -19,7 +19,10 @@ public class AddButtonController extends AbstractComponentController
 {	
 	private final int minimumPoints = 100;
 	private final String defaultPoints = "750";
-	private final int playerMax = 4; 
+	private final int PLAYER_MAX = 4; 
+	
+	private String points;
+	private String name;
 	
 	public AddButtonController(Component viewComponent, JDialog dialog, GameFrame gameFrame, GameEngine gameEngine) 
 	{
@@ -32,8 +35,8 @@ public class AddButtonController extends AbstractComponentController
 		// cast dialog to local variable for convenience reference
 		AddPlayerDialog dialog = (AddPlayerDialog) getDialog();
 		
-		String points = dialog.getInputPanel().getPointsField().getText();
-		String name = dialog.getInputPanel().getNameField().getText(); 
+		points = dialog.getInputPanel().getPointsField().getText();
+		name = dialog.getInputPanel().getNameField().getText(); 
 
 		// validate points and name fields
 		if (name.matches("^[a-zA-Z\\s+]+$") && points.matches("[0-9]+$"))
@@ -59,7 +62,7 @@ public class AddButtonController extends AbstractComponentController
 				getGameFrame().getStatusBarPanel().setStatus(GameStatus.READY);
 
 				// set a maximum player limit, disable add button when player limit met
-				if(playerCount == playerMax)
+				if(playerCount == PLAYER_MAX)
 				{
 					getGameFrame().getSummaryPanel().getToolBarPanel().playerMaxReached(true, getGameFrame());
 				}

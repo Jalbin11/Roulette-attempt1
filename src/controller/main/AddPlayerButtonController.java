@@ -20,7 +20,6 @@ public class AddPlayerButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// create add player dialog 
 		@SuppressWarnings("unused")
 		AddPlayerDialog addPlayerDialog = new AddPlayerDialog(getGameEngine(), getGameFrame());
 	}

@@ -18,7 +18,8 @@ public class CancelButtonController extends AbstractComponentController
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		getDialog().dispose();
 	}
 

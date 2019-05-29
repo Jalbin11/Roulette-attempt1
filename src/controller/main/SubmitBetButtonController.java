@@ -14,6 +14,7 @@ import view.main.PlayerSummaryPanel;
 
 public class SubmitBetButtonController extends AbstractComponentController
 {
+	private int betAmount;
 	private int currentPoints;
 	private String betString;
 	private BetType betType;
@@ -28,7 +29,7 @@ public class SubmitBetButtonController extends AbstractComponentController
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		// references for convenience
+		// get references
 		panel = (PlayerSummaryPanel) getViewComponent();
 		currentPoints = getGameEngine().getPlayer(String.valueOf(panel.getId())).getPoints();
 		betString = panel.getBetAmountField().getText();
@@ -38,7 +39,7 @@ public class SubmitBetButtonController extends AbstractComponentController
 		// check values only if player entered an integer value
 		if (checkStringContainsValidInt(betString))
 		{
-			int betAmount = Integer.valueOf(betString);
+			betAmount = Integer.valueOf(betString);
 	
 			// check entered value is in range
 			if(betAmount <= currentPoints && betAmount >= 0)
@@ -70,11 +71,13 @@ public class SubmitBetButtonController extends AbstractComponentController
 					// call spin() on a separate thread
 					new Thread()
 					{
-					@Override
-					public void run()
-					{
-						getGameEngine().spin(getGameFrame().getInitialDelay(), getGameFrame().getFinalDelay(), getGameFrame().getDelayIncrement());
-					}
+						@Override
+						public void run()
+						{
+							getGameEngine().spin(getGameFrame().getInitialDelay(), 
+												getGameFrame().getFinalDelay(), 
+												getGameFrame().getDelayIncrement());
+						}
 					}.start();
 				}
 			}

@@ -68,7 +68,7 @@ public class PlayerSummaryPanel extends JPanel
 	public void update(Player player)
 	{
 		// panel will still have old points and bet values, compare
-		// with new player values to get outcomes
+		// with new player values to derive outcomes
 		
 		int prevPoints = 0;
 		int newPoints = player.getPoints();
@@ -134,11 +134,6 @@ public class PlayerSummaryPanel extends JPanel
 	public JTextField getBetAmountField() 
 	{
 		return betAmountField;
-	}
-	
-	public JLabel getPointsLabel() 
-	{
-		return pointsLabel;
 	}
 
 	public JComboBox<BetType> getBetTypeComboBox() 

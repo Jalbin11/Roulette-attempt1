@@ -29,12 +29,12 @@ public class RemovePlayerDialog extends JDialog
 	private void populateComponents(GameEngine gameEngine, RemovePlayerDialog dialog, GameFrame gameFrame)
 	{
 		setLayout(new FlowLayout());
-		this.inputPanel = new RemovePlayerInputPanel(gameEngine, dialog, gameFrame);
-		add(this.inputPanel);
+		inputPanel = new RemovePlayerInputPanel(gameEngine, dialog, gameFrame);
+		add(inputPanel);
 	}
 
 	public RemovePlayerInputPanel getInputPanel() 
 	{
-		return this.inputPanel;
+		return inputPanel;
 	}
 }

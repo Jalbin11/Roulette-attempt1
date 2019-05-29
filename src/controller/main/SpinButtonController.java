@@ -14,6 +14,8 @@ import view.main.PlayerSummaryPanel;
 
 public class SpinButtonController extends AbstractComponentController
 {
+	private int noBet = 0;
+	
 	public SpinButtonController(Component viewComponent, GameFrame gameFrame, GameEngine gameEngine) 
 	{
 		super(viewComponent, gameFrame, gameEngine);
@@ -36,9 +38,10 @@ public class SpinButtonController extends AbstractComponentController
 			{
 				if (!p.getHasPlacedBet())
 				{
-					getGameEngine().getPlayer(String.valueOf(p.getId())).setBet(0);
+					getGameEngine().getPlayer(String.valueOf(p.getId())).setBet(noBet);
 					getGameEngine().getPlayer(String.valueOf(p.getId())).setBetType(BetType.RED);					
 					p.lock(getGameEngine().getPlayer(String.valueOf(p.getId())));
+					p.setBet(noBet);
 				}
 			}
 			

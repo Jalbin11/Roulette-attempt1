@@ -11,10 +11,11 @@ public class GUITestClient
 	public static void main(String args[])
 	{	
 		final GameEngine gameEngine = new GameEngineImpl();
+		
+		// pass GUI view a reference to the model
 	    final GameFrame gameFrame = new GameFrame(gameEngine);
 	   
 	    gameEngine.addGameEngineCallback(new GameEngineCallbackImpl());
-	    gameEngine.addGameEngineCallback(new GameEngineCallbackGUI(gameFrame));	    
-	    
+	    gameEngine.addGameEngineCallback(new GameEngineCallbackGUI(gameFrame));	       
 	   }
 	}

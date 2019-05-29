@@ -12,27 +12,19 @@ import model.interfaces.GameEngine;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 
-	  private JMenu gameMenu;
-	  private JMenu tasksMenu;
-	  private JMenuItem exitMenuItem;
-	  private JMenuItem addPlayerMenuItem;
-	  private JMenuItem removePlayerMenuItem;
+	  private JMenu gameMenu = new JMenu("Game");
+	  private JMenu tasksMenu = new JMenu("Tasks");
+	  private JMenuItem exitMenuItem = new JMenuItem("Exit");
+	  private JMenuItem addPlayerMenuItem = new JMenuItem("Add new player...");
+	  private JMenuItem removePlayerMenuItem = new JMenuItem("Remove a player...");
 	  
 	  public MenuBar(GameEngine gameEngine, GameFrame gameFrame)
 	  {
-		  // Game menu
-		  gameMenu = new JMenu("Game");
-		  exitMenuItem = new JMenuItem("Exit");
-		  gameMenu.add(this.exitMenuItem);
-
-		  // Edit menu
-		  tasksMenu = new JMenu("Tasks");
-		  addPlayerMenuItem = new JMenuItem("Add new player...");
-		  removePlayerMenuItem = new JMenuItem("Remove a player...");
+		  // build menus
+		  gameMenu.add(this.exitMenuItem);		  
 		  removePlayerMenuItem.setEnabled(false);
 		  tasksMenu.add(addPlayerMenuItem);
 		  tasksMenu.add(removePlayerMenuItem);
-
 		  add(gameMenu);
 		  add(tasksMenu);		  
 		  
@@ -69,5 +61,4 @@ public class MenuBar extends JMenuBar {
 				removePlayerMenuItem.setEnabled(true);
 			}
 	  }
-	  
 }

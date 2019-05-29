@@ -18,27 +18,27 @@ public class SummaryPanel extends JPanel
 		setLayout(new BorderLayout());
 		
 		// maintain reference to model and view for view sub-components
-		this.menuBar = new MenuBar(gameEngine, gameFrame);
-		this.statsPanel = new StatsPanel(gameEngine, gameFrame);
-		this.toolBarPanel = new ToolBarPanel(gameEngine, gameFrame);
+		menuBar = new MenuBar(gameEngine, gameFrame);
+		statsPanel = new StatsPanel(gameEngine, gameFrame);
+		toolBarPanel = new ToolBarPanel(gameEngine, gameFrame);
 				
-		add(this.menuBar, BorderLayout.NORTH);
-		add(this.statsPanel, BorderLayout.SOUTH);
-		add(this.toolBarPanel, BorderLayout.CENTER);
+		add(menuBar, BorderLayout.NORTH);
+		add(statsPanel, BorderLayout.SOUTH);
+		add(toolBarPanel, BorderLayout.CENTER);
 	}
 	
 	public MenuBar getMenuBar() 
 	{
-		return this.menuBar;
+		return menuBar;
 	}
 
 	public StatsPanel getStatsPanel() 
 	{
-		return this.statsPanel;
+		return statsPanel;
 	}
 
 	public ToolBarPanel getToolBarPanel() 
 	{
-		return this.toolBarPanel;
+		return toolBarPanel;
 	}
 }

@@ -39,7 +39,7 @@ public class GameFrame extends JFrame
 		setUILookAndFeel(new javax.swing.plaf.FontUIResource("Segoe UI Semibold", Font.PLAIN,12));
 
 		// create frame and contents
-		setPreferredSize(new Dimension(1200, 1000));
+		setPreferredSize(new Dimension(900, 900));
 		setMinimumSize(minSize);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		populateComponents(gameEngine, this);
@@ -55,15 +55,16 @@ public class GameFrame extends JFrame
 		setLayout(new BorderLayout());
 		
 		// maintain reference to model and view for view sub-components
-		this.summaryPanel = new SummaryPanel(gameEngine, gameFrame);
-		this.statusBarPanel = new StatusBarPanel();
-		this.wheelPanel = new WheelPanel();
+		summaryPanel = new SummaryPanel(gameEngine, gameFrame);
+		statusBarPanel = new StatusBarPanel();
+		wheelPanel = new WheelPanel();
 		
-		add(this.summaryPanel, BorderLayout.NORTH);
-		add(this.statusBarPanel, BorderLayout.SOUTH);
-		add(this.wheelPanel, BorderLayout.CENTER);
+		add(summaryPanel, BorderLayout.NORTH);
+		add(statusBarPanel, BorderLayout.SOUTH);
+		add(wheelPanel, BorderLayout.CENTER);
 	}
 	
+	// lock and update views during spin
 	public void preSpinUIUpdate() 
 	{
 		statusBarPanel.setStatus(GameStatus.INPROGRESS);
@@ -72,6 +73,7 @@ public class GameFrame extends JFrame
 		statusBarPanel.incrementSpinCount();
 	}
 	
+	// unlock and update views post spin
 	public void postSpinUIUpdate() 
 	{
 		statusBarPanel.setStatus(GameStatus.GAMEOVER);
@@ -108,18 +110,19 @@ public class GameFrame extends JFrame
 
 	public StatusBarPanel getStatusBarPanel() 
 	{
-		return this.statusBarPanel;
+		return statusBarPanel;
 	}
 
 	public WheelPanel getWheelPanel() 
 	{
-		return this.wheelPanel;
+		return wheelPanel;
 	}
 
 	public SummaryPanel getSummaryPanel() 
 	{
-		return this.summaryPanel;
+		return summaryPanel;
 	}
+	
 	public int getInitialDelay() 
 	{
 		return INITIAL_DELAY;
